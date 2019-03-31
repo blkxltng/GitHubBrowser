@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +35,7 @@ public class WebViewFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         repoURL = getArguments().getString(Constants.ARG_REPO_URL);
+//        showBackButton();
     }
 
     @Nullable
@@ -43,5 +45,11 @@ public class WebViewFragment extends Fragment {
         webView = view.findViewById(R.id.fragmentWebView_webView);
         webView.loadUrl(repoURL);
         return view;
+    }
+
+    public void showBackButton() {
+        if (getActivity() instanceof AppCompatActivity) {
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
     }
 }

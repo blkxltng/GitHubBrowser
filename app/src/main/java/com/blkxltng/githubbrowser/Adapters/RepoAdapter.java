@@ -12,6 +12,8 @@ import com.blkxltng.githubbrowser.R;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 public class RepoAdapter extends RecyclerView.Adapter<RepoAdapter.RepoHolder> {
 
     public interface RepoAdapterCallback {
@@ -19,11 +21,12 @@ public class RepoAdapter extends RecyclerView.Adapter<RepoAdapter.RepoHolder> {
     }
 
     private static List<Repo> repoList;
+
     private Context mContext;
 
     private static RepoAdapterCallback mCallback;
 
-    private static int itemLimit = 3;
+//    private static int itemLimit = 3;
 
     // Provide a suitable constructor (depends on the kind of dataset)
     public RepoAdapter(List<Repo> list, Context context) {
@@ -48,16 +51,15 @@ public class RepoAdapter extends RecyclerView.Adapter<RepoAdapter.RepoHolder> {
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-//        return repoList.size();
-        if(repoList.size() <= itemLimit) {
-            return repoList.size();
-        } else {
-            return itemLimit;
-        }
+        return repoList.size();
+//        if(repoList.size() <= itemLimit) {
+//            return repoList.size();
+//        } else {
+//            return itemLimit;
+//        }
     }
 
     public static class RepoHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        // each data item is just a string in this case
         private TextView repoName, repoDescription, repoLanguage, repoDefaultBranch, repoStarCount;
         public RepoHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.list_item_repo, parent, false));
@@ -80,7 +82,6 @@ public class RepoAdapter extends RecyclerView.Adapter<RepoAdapter.RepoHolder> {
 
         @Override
         public void onClick(View v) {
-            //do something
             int position = getAdapterPosition();
             mCallback.onClickRepo(repoList.get(position).getRepoURL());
         }

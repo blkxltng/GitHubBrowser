@@ -11,6 +11,7 @@ import dagger.Provides;
 
 @Module
 public class MainActivityContextModule {
+
     private MainActivity mainActivity;
 
     public Context context;
@@ -32,4 +33,5 @@ public class MainActivityContextModule {
     public Context provideContext() {
         return context;
     }
+
 }

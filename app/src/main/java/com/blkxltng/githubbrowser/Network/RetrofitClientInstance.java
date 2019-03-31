@@ -1,12 +1,7 @@
 package com.blkxltng.githubbrowser.Network;
 
 import com.blkxltng.githubbrowser.Constants;
-import com.blkxltng.githubbrowser.Interfaces.GitHubService;
-import com.blkxltng.githubbrowser.Models.Repo;
 
-import java.util.List;
-
-import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 

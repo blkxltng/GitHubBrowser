@@ -1,8 +1,11 @@
 package com.blkxltng.githubbrowser.Models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
-public class Organization {
+public class Organization implements Parcelable {
 
     @SerializedName("name")
     private String organizationName;
@@ -62,4 +65,39 @@ public class Organization {
     public void setOrganizationLocation(String organizationLocation) {
         this.organizationLocation = organizationLocation;
     }
+
+    protected Organization(Parcel in) {
+        organizationName = in.readString();
+        organizationDescription = in.readString();
+        organizationLogin = in.readString();
+        organizationAvatarURL = in.readString();
+        organizationLocation = in.readString();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(organizationName);
+        dest.writeString(organizationDescription);
+        dest.writeString(organizationLogin);
+        dest.writeString(organizationAvatarURL);
+        dest.writeString(organizationLocation);
+    }
+
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<Organization> CREATOR = new Parcelable.Creator<Organization>() {
+        @Override
+        public Organization createFromParcel(Parcel in) {
+            return new Organization(in);
+        }
+
+        @Override
+        public Organization[] newArray(int size) {
+            return new Organization[size];
+        }
+    };
 }
