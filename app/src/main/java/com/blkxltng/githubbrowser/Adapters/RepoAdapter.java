@@ -26,37 +26,26 @@ public class RepoAdapter extends RecyclerView.Adapter<RepoAdapter.RepoHolder> {
 
     private static RepoAdapterCallback mCallback;
 
-//    private static int itemLimit = 3;
-
-    // Provide a suitable constructor (depends on the kind of dataset)
     public RepoAdapter(List<Repo> list, Context context) {
         repoList = list;
         mContext = context;
         mCallback = (RepoAdapterCallback) mContext;
     }
 
-    // Create new views (invoked by the layout manager)
     @Override
     public RepoAdapter.RepoHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(mContext);
         return new RepoHolder(layoutInflater, parent);
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(RepoHolder holder, int position) {
         holder.bind(repoList.get(position));
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
         return repoList.size();
-//        if(repoList.size() <= itemLimit) {
-//            return repoList.size();
-//        } else {
-//            return itemLimit;
-//        }
     }
 
     public static class RepoHolder extends RecyclerView.ViewHolder implements View.OnClickListener{

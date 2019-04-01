@@ -7,31 +7,32 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
+        android:id="@+id/fragmentSearch_enterOrganizaationTextView"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
         android:text="@string/enter_a_github_organization"
+        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/fragmentSearch_organizationEditText"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:ems="10"
-        android:inputType="textNoSuggestions"
+        android:hint="@string/enter_a_name"
         android:imeOptions="actionSearch"
-        android:hint="Enter a name"
+        android:inputType="textNoSuggestions"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/fragmentSearch_enterOrganizaationTextView" />
 
     <Button
         android:id="@+id/fragmentSearch_searchButton"
@@ -47,12 +48,13 @@
 
     <TextView
         android:id="@+id/fragmentSearch_errorTextView"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:text="@string/organization_not_found"
+        android:textAlignment="center"
         android:textColor="@android:color/holo_red_dark"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"

@@ -4,8 +4,6 @@ import com.blkxltng.githubbrowser.Constants;
 import com.blkxltng.githubbrowser.Dagger.Scope.ApplicationScope;
 import com.blkxltng.githubbrowser.Interfaces.GitHubService;
 
-import javax.inject.Singleton;
-
 import dagger.Module;
 import dagger.Provides;
 import retrofit2.Retrofit;

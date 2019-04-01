@@ -1,12 +1,11 @@
 package com.blkxltng.githubbrowser.Fragments;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,10 +18,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.blkxltng.githubbrowser.Adapters.RepoAdapter;
 import com.blkxltng.githubbrowser.Dagger.Component.ApplicationComponent;
-import com.blkxltng.githubbrowser.Dagger.Component.MainActivityComponent;
-import com.blkxltng.githubbrowser.Dagger.Qualifier.ApplicationContext;
 import com.blkxltng.githubbrowser.GitHubBrowserApplication;
 import com.blkxltng.githubbrowser.Interfaces.GitHubService;
 import com.blkxltng.githubbrowser.Models.Organization;
@@ -75,6 +71,7 @@ public class SearchFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
 
+        //Allows the user to look up the organization by clicking the search button in the keyboard
         organizationEditext = view.findViewById(R.id.fragmentSearch_organizationEditText);
         organizationEditext.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -88,6 +85,7 @@ public class SearchFragment extends Fragment {
             }
         });
 
+        //Click search button to look up an organization
         searchButton = view.findViewById(R.id.fragmentSearch_searchButton);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,6 +97,7 @@ public class SearchFragment extends Fragment {
             }
         });
 
+        //Displays an error if the searched organization couldn't be found
         errorTextView = view.findViewById(R.id.fragmentSearch_errorTextView);
         searchProgress = view.findViewById(R.id.fragmentSearch_searchProgress);
         return view;
@@ -106,15 +105,9 @@ public class SearchFragment extends Fragment {
 
     @Override
     public void onAttach(Context context) {
-//        AndroidSupportInjection.inject(this);
-
+        //Dagger injection
         ApplicationComponent applicationComponent = getApplicationComponent();
         applicationComponent.injectSearchFragment(this);
-//        mainActivityComponent = DaggerMainActivityComponent.builder()
-//                .applicationComponent(applicationComponent)
-//                .build();
-//
-//        mainActivityComponent.injectMainActivity(this);
 
         super.onAttach(context);
         mCallback = (SearchFragmentCallback) context;
@@ -126,22 +119,20 @@ public class SearchFragment extends Fragment {
         mCallback = null;
     }
 
+    //Looks up the organization and gets the info
     private void searchGitHub(final String organizationName) {
 
         errorTextView.setVisibility(View.INVISIBLE);
         searchProgress.setVisibility(View.VISIBLE);
 
 //        GitHubService service = RetrofitClientInstance.getRetrofitInstance().create(GitHubService.class);
-//        GitHubService service = getApplicationComponent().getGitHubService();
         Call<Organization> call = service.getOrganization(organizationName);
         call.enqueue(new Callback<Organization>() {
             @Override
             public void onResponse(Call<Organization> call, Response<Organization> response) {
                 if(response.isSuccessful()) {
-//                    Log.d(TAG, "onResponse: First repo name is: " + response.body().get(0).getRepoName());
                     organization = response.body();
                     getRepoList(organizationName);
-//                    mCallback.loadRepoList(organizationName, response.body());
                 } else {
                     errorTextView.setVisibility(View.VISIBLE);
                 }
@@ -151,11 +142,12 @@ public class SearchFragment extends Fragment {
             @Override
             public void onFailure(Call<Organization> call, Throwable t) {
                 searchProgress.setVisibility(View.INVISIBLE);
-                Toast.makeText(mContext, "Something went wrong (org)...Please try later!", Toast.LENGTH_SHORT).show();
+                displayNotConnectedMessage();
             }
         });
     }
 
+    //Gets the list of repos for the searched organization
     private void getRepoList(String organizationName) {
         searchProgress.setVisibility(View.VISIBLE);
 
@@ -179,12 +171,13 @@ public class SearchFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<Repo>> call, Throwable t) {
-//                searchProgress.setVisibility(View.INVISIBLE);
-                Toast.makeText(mContext, "Something went wrong (rep)...Please try later!", Toast.LENGTH_SHORT).show();
+                searchProgress.setVisibility(View.INVISIBLE);
+                displayNotConnectedMessage();
             }
         });
     }
 
+    //Sorts the list of repos from highest star count to lowest star count
     private void sortRepoList() {
         Comparator<Repo> starsComparator = new Comparator<Repo>() {
             @Override
@@ -203,7 +196,23 @@ public class SearchFragment extends Fragment {
             inputMethodManager.hideSoftInputFromWindow(organizationEditext.getWindowToken(), 0);
     }
 
+    //Gets the Application Component for dagger injection
     private ApplicationComponent getApplicationComponent() {
         return ((GitHubBrowserApplication) getActivity().getApplication()).getApplicationComponent();
+    }
+
+    //Checks to see if the app has a network connection
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        return cm.getActiveNetworkInfo() != null;
+    }
+
+    private void displayNotConnectedMessage() {
+        boolean connected = isNetworkConnected();
+        if (!connected) {
+            Toast.makeText(mContext, getString(R.string.app_name ) + " requires an internet " +
+                    "connection to work. Please check your internet connection.", Toast.LENGTH_SHORT).show();
+        }
     }
 }

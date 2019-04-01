@@ -20,10 +20,6 @@ public class GitHubBrowserApplication extends Application {
 
     }
 
-//    public static GitHubBrowserApplication get(Activity activity){
-//        return (GitHubBrowserApplication) activity.getApplication();
-//    }
-
     public ApplicationComponent getApplicationComponent() {
         return applicationComponent;
     }

@@ -34,8 +34,8 @@ public class WebViewFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //Gets the url for the repo
         repoURL = getArguments().getString(Constants.ARG_REPO_URL);
-//        showBackButton();
     }
 
     @Nullable
@@ -43,13 +43,9 @@ public class WebViewFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_webview, container, false);
         webView = view.findViewById(R.id.fragmentWebView_webView);
+        //Loads the url for the repo into the webview
         webView.loadUrl(repoURL);
         return view;
     }
 
-    public void showBackButton() {
-        if (getActivity() instanceof AppCompatActivity) {
-            ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-    }
 }

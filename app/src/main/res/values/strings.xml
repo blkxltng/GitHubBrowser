@@ -3,7 +3,9 @@
     <string name="no_description_found">-No description found-</string>
     <string name="no_location_found">-No location found-</string>
     <string name="no_repositories_found">-No repositories found-</string>
-    <string name="organization_not_found">Organization not found. Please try another search.</string>
-    <string name="enter_a_github_organization">Enter a GitHub Organization here.</string>
+    <string name="organization_not_found"> ⚠ Organization not found. Please enter the exact organization username or try another search.</string>
+    <string name="enter_a_github_organization">Enter a GitHub Organization name here. You\'ll be able to view that organization\'s top 3 starred repositories!</string>
     <string name="star_symbol">★</string>
+    <string name="default_branch">Default Branch:</string>
+    <string name="enter_a_name">Enter a name i.e. NYTimes</string>
 </resources>

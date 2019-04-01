@@ -19,9 +19,4 @@ public class RetrofitClientInstance {
 
         return retrofit;
     }
-
-
-//    GitHubService service = retrofit.create(GitHubService.class);
-//
-//    Call<List<Repo>> repos = service.listUserRepos("blkxltng");
 }

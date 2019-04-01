@@ -1,7 +1,6 @@
 package com.blkxltng.githubbrowser.Dagger.Component;
 
 import android.content.Context;
-import android.support.v4.app.Fragment;
 
 import com.blkxltng.githubbrowser.Dagger.Module.ApplicationModule;
 import com.blkxltng.githubbrowser.Dagger.Module.RetrofitModule;
