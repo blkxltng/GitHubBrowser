@@ -12,19 +12,17 @@ import com.blkxltng.githubbrowser.R;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 public class RepoAdapter extends RecyclerView.Adapter<RepoAdapter.RepoHolder> {
 
     public interface RepoAdapterCallback {
         void onClickRepo(String repoURL);
     }
 
-    private static List<Repo> repoList;
+    private List<Repo> repoList;
 
     private Context mContext;
 
-    private static RepoAdapterCallback mCallback;
+    private RepoAdapterCallback mCallback;
 
     public RepoAdapter(List<Repo> list, Context context) {
         repoList = list;
@@ -48,8 +46,9 @@ public class RepoAdapter extends RecyclerView.Adapter<RepoAdapter.RepoHolder> {
         return repoList.size();
     }
 
-    public static class RepoHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class RepoHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private TextView repoName, repoDescription, repoLanguage, repoDefaultBranch, repoStarCount;
+        private Repo currentRepo;
         public RepoHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.list_item_repo, parent, false));
 
@@ -67,12 +66,12 @@ public class RepoAdapter extends RecyclerView.Adapter<RepoAdapter.RepoHolder> {
             repoLanguage.setText(repo.getRepoLanguage());
             repoDefaultBranch.setText(repo.getRepoDefaultBranch());
             repoStarCount.setText(repo.getRepoStarCount().toString());
+            currentRepo = repo;
         }
 
         @Override
         public void onClick(View v) {
-            int position = getAdapterPosition();
-            mCallback.onClickRepo(repoList.get(position).getRepoURL());
+            mCallback.onClickRepo(currentRepo.getRepoURL());
         }
     }
 

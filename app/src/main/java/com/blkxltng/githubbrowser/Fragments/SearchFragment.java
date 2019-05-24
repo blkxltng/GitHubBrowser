@@ -78,7 +78,13 @@ public class SearchFragment extends Fragment {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     hideSoftKeyboard();
-                    searchGitHub(v.getText().toString().toLowerCase());
+//                    if(organizationEditext.getText().toString().trim().isEmpty()) {
+//                        Toast.makeText(mContext, "Please enter an organization name.", Toast.LENGTH_SHORT).show();
+//                    } else {
+//                        searchGitHub(v.getText().toString().toLowerCase());
+//                    }
+                    String organizationName = v.getText().toString().toLowerCase();
+                    checkEdittext(organizationName);
                     return true;
                 }
                 return false;
@@ -87,14 +93,12 @@ public class SearchFragment extends Fragment {
 
         //Click search button to look up an organization
         searchButton = view.findViewById(R.id.fragmentSearch_searchButton);
-        searchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                hideSoftKeyboard();
-                String searchName = organizationEditext.getText().toString().toLowerCase();
+        searchButton.setOnClickListener(v -> {
+            hideSoftKeyboard();
+            String searchName = organizationEditext.getText().toString().toLowerCase();
 
-                searchGitHub(searchName);
-            }
+//                searchGitHub(searchName);
+            checkEdittext(searchName);
         });
 
         //Displays an error if the searched organization couldn't be found
@@ -210,9 +214,20 @@ public class SearchFragment extends Fragment {
 
     private void displayNotConnectedMessage() {
         boolean connected = isNetworkConnected();
+//        if(organizationName.trim().isEmpty()) {
+//            Toast.makeText(mContext, "Please enter an organization name.", Toast.LENGTH_SHORT).show();
+//        }
         if (!connected) {
             Toast.makeText(mContext, getString(R.string.app_name ) + " requires an internet " +
                     "connection to work. Please check your internet connection.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void checkEdittext(String organizationName) {
+        if(organizationEditext.getText().toString().trim().isEmpty()) {
+            Toast.makeText(mContext, "Please enter an organization name.", Toast.LENGTH_SHORT).show();
+        } else {
+            searchGitHub(organizationName);
         }
     }
 }
